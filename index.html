@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -145,8 +146,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .response-container {
@@ -193,6 +199,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -227,8 +234,8 @@
     </div>
 
     <script>
-        const API_ENDPOINT = 'https://foodvisor-2zpg.onrender.com';
-        
+        const API_ENDPOINT = 'https://foodvisor-2zpg.onrender.com/inf';
+
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
@@ -286,7 +293,7 @@
                 });
 
                 const data = await response.json();
-                
+
                 displayResponse(data, response.status);
                 loading.classList.remove('active');
                 responseContainer.classList.add('active');
@@ -325,4 +332,5 @@
         }
     </script>
 </body>
+
 </html>
