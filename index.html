@@ -285,7 +285,7 @@
 
             try {
                 const formData = new FormData();
-                formData.append('image', currentFile);
+                formData.append('file', currentFile);
 
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
