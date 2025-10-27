@@ -1,4 +1,5 @@
 python-dotenv
 fastapi
+python-multipart
 groq
 uvicorn
