@@ -30,7 +30,7 @@ async def analyze_image(file: UploadFile = File(...)):
                 "content": [
                     {
                         "type": "text",
-                        "text": "Analyze this food label image. Identify who it is suitable for (e.g., people with iron deficiency) and who it isn't suitable for (e.g., lactose intolerant people). Respond with only a JSON object with keys 'suitable_for' and 'not_suitable_for'. Do not write the whole process, just give me the final answer.",
+                        "text": "Analyze this food label image. Identify who it is suitable for (e.g., people with iron deficiency) and who it isn't suitable for (e.g., lactose intolerant people). Do not write the whole process, just give me the final answer.",
                     },
                     {
                         "type": "image_url",
