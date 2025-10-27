@@ -31,9 +31,9 @@ async def analyze_image(file: UploadFile = File(...)):
                 ],
             }
         ],
-        model="llama-3.2-11b-vision-preview",
-        temperature=0,
-        max_tokens=300,
+        model="meta-llama/llama-4-scout-17b-16e-instruct",
+        temperature=0.3,
+        max_tokens=1024,
     )
     response = chat_completion.choices[0].message.content
     return {"analysis": response}
