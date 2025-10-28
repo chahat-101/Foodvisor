@@ -1,350 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foodvisor</title>
+    <title>IngredientIQ – Watercolor Food Vision</title>
+
+    <!-- Google Font – a hand‑drawn, friendly feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Marked.js for markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            /* Watercolor palette – soft, organic tones */
+            --ink: #2c3e50;          /* deep navy for text */
+            --accent: #e67e22;       /* warm coral for CTAs */
+            --accent‑light: #f8b862;
+            --bg: #faf9f5;           /* creamy paper */
+            --card: #ffffff;
+            --wash: #f0efeb;         /* subtle wash for cards */
+            --shadow: rgba(0,0,0,.08);
         }
 
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height:1.6;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            padding:20px 0;
         }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
+        /* ---------- Header (Hubcycle style) ---------- */
+        header {
+            width:100%;
+            max-width:1200px;
+            padding:0 20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:40px;
+        }
+        .logo {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:700;
+            font-size:1.4rem;
+            color:var(--accent);
+        }
+        .logo svg { width:36px; height:36px; fill:currentColor; }
+        nav {
+            display:flex;
+            gap:8px;
+        }
+        nav a {
+            padding:8px 16px;
+            border-radius:8px;
+            background:#2c6b6f;
+            color:#fff;
+            font-weight:600;
+            text-decoration:none;
+            transition:background .3s;
+        }
+        nav a:hover { background:#1f5156; }
+        .cta {
+            background:var(--accent);
+            color:#fff;
+            padding:10px 20px;
+            border-radius:8px;
+            font-weight:600;
+            text-decoration:none;
+        }
+        .cta:hover { background:#d35400; }
+
+        /* ---------- Hero (Hubcycle vibe) ---------- */
+        .hero {
+            width:100%;
+            max-width:1200px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:40px;
+            align-items:center;
+            margin-bottom:80px;
+            padding:0 20px;
+        }
+        .hero h1 {
+            font-size:4.5rem;
+            font-weight:700;
+            color:var(--accent);
+            line-height:1;
+            margin-bottom:16px;
+        }
+        .hero p {
+            font-size:1.2rem;
+            margin-bottom:24px;
+            color:#555;
+        }
+        .hero .btn {
+            background:var(--accent);
+            color:#fff;
+            padding:12px 28px;
+            border-radius:12px;
+            font-weight:600;
+            text-decoration:none;
+            display:inline-block;
+        }
+        .hero .btn:hover { background:#d35400; }
+
+        .hero .illustration {
+            position:relative;
+        }
+        .hero .illustration svg {
+            width:100%;
+            max-width:420px;
+            filter:drop-shadow(0 8px 20px rgba(0,0,0,.1));
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        /* ---------- Tester Card (watercolor wash) ---------- */
+        .tester {
+            background:var(--card);
+            border-radius:24px;
+            box-shadow:0 12px 40px var(--shadow);
+            padding:40px;
+            max-width:620px;
+            width:100%;
+            position:relative;
+            overflow:hidden;
+        }
+        .tester::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at 30% 20%, rgba(246,188,98,.12) 0%, transparent 70%);
+            pointer-events:none;
+        }
+        .tester h2 {
+            font-size:1.8rem;
+            margin-bottom:12px;
+            color:var(--accent);
+            text-align:center;
+        }
+        .tester p {
+            text-align:center;
+            margin-bottom:24px;
+            color:#777;
         }
 
-        h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
+        /* Upload area */
         .upload-area {
-            border: 3px dashed #667eea;
-            border-radius: 15px;
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
+            border:3px dashed var(--accent‑light);
+            border-radius:16px;
+            padding:48px 20px;
+            text-align:center;
+            cursor:pointer;
+            transition:all .3s;
+            background:var(--wash);
         }
-
         .upload-area:hover {
-            border-color: #764ba2;
-            background: #f8f9ff;
+            border-color:var(--accent);
+            background:#fff9f0;
+            transform:scale(1.02);
         }
-
         .upload-icon {
-            font-size: 64px;
-            margin-bottom: 15px;
+            width:80px;
+            height:80px;
+            margin:0 auto 16px;
         }
-
         .upload-text {
-            color: #667eea;
-            font-size: 18px;
-            font-weight: 600;
+            font-weight:600;
+            color:var(--accent);
         }
+        #fileInput { display:none; }
 
-        #fileInput {
-            display: none;
-        }
-
+        /* Preview */
         .preview-container {
-            display: none;
-            margin-bottom: 20px;
+            display:none;
+            text-align:center;
+            margin:24px 0;
         }
-
-        .preview-container.active {
-            display: block;
-        }
-
+        .preview-container.active { display:block; }
         .image-preview {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 15px;
+            width:100%;
+            max-height:340px;
+            object-fit:contain;
+            border-radius:16px;
+            box-shadow:0 8px 24px var(--shadow);
         }
 
+        /* Buttons */
         .btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 10px;
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            font-weight:600;
+            cursor:pointer;
+            transition:all .3s;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            margin-bottom:12px;
         }
-
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background:linear-gradient(135deg, var(--accent), #d35400);
+            color:#fff;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(230,126,34,.4); }
         .btn-secondary {
-            background: #f5f5f5;
-            color: #666;
+            background:#ecf0f1;
+            color:#555;
         }
+        .btn-secondary:hover { background:#dfe6e9; }
 
-        .btn-secondary:hover {
-            background: #e5e5e5;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
+        /* Loading */
         .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
+            display:none;
+            text-align:center;
+            padding:32px 0;
         }
-
-        .loading.active {
-            display: block;
-        }
-
+        .loading.active { display:block; }
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+            width:56px;
+            height:56px;
+            border:5px solid #f0f0f0;
+            border-top:5px solid var(--accent);
+            border-radius:50%;
+            animation:spin 1s linear infinite;
+            margin:0 auto 16px;
         }
+        @keyframes spin { to { transform:rotate(360deg); } }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+        /* Response */
         .response-container {
-            display: none;
-            margin-top: 20px;
+            display:none;
+            margin-top:24px;
         }
-
-        .response-container.active {
-            display: block;
-        }
-
+        .response-container.active { display:block; }
         .response-title {
-            color: #667eea;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-weight:600;
+            color:var(--accent);
+            margin-bottom:12px;
         }
-
         .response-content {
-            background: #f8f9ff;
-            border-radius: 10px;
-            padding: 20px;
-            word-wrap: break-word;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            font-size: 16px;
-            color: #333;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
+            background:#fffaf0;
+            border:1px solid #ffe0b3;
+            border-radius:12px;
+            padding:20px;
+            max-height:420px;
+            overflow-y:auto;
+            line-height:1.7;
         }
-
         .response-content pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            background: #eee;
-            padding: 10px;
-            border-radius: 5px;
+            background:#f5f5f5;
+            padding:12px;
+            border-radius:8px;
+            overflow-x:auto;
+            font-family:monospace;
         }
 
         .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
+            background:#fef2f2;
+            color:#b91c1c;
+            padding:16px;
+            border-radius:12px;
+            margin-bottom:20px;
+            display:none;
         }
+        .error-message.active { display:block; }
 
-        .error-message.active {
-            display: block;
+        /* Footer */
+        footer {
+            margin-top:60px;
+            text-align:center;
+            font-size:0.9rem;
+            color:#777;
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔍 IngredientIQ API Tester</h1>
-            <p>Upload an image to test the API</p>
-        </div>
 
-        <div class="error-message" id="errorMessage"></div>
+<!-- ====================== Header ====================== -->
+<header>
+    <div class="logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        IngredientIQ
+    </div>
+    <nav>
+        <a href="#buy">Buy</a>
+        <a href="#sell">Sell</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#impact">Impact</a>
+        <a href="#culture">Culture</a>
+    </nav>
+    <a href="#contact" class="cta">Contact</a>
+</header>
 
-        <div class="upload-area" id="uploadArea">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">Click to upload image</div>
-            <input type="file" id="fileInput" accept="image/*">
-        </div>
+<!-- ====================== Hero ====================== -->
+<section class="hero">
+    <div>
+        <h1>We turn<br>what’s left<br>into what’s next.</h1>
+        <p>We purchase by‑products, we sell ingredients.</p>
+        <a href="#tester" class="btn">Discover our API</a>
+    </div>
+    <div class="illustration">
+        <!-- Watercolor‑style blueberry (wireframe + soft fill) -->
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="watercolor">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" result="noise"/>
+                    <feDiffuseLighting in="noise" lighting-color="#f8b862" surfaceScale="4" result="bump">
+                        <feDistantLight azimuth="45" elevation="60"/>
+                    </feDiffuseLighting>
+                    <feComposite in="bump" in2="SourceGraphic" operator="in"/>
+                </filter>
+            </defs>
+            <g filter="url(#watercolor)">
+                <path d="M200 100c-30 0-55 20-65 45-8 20 5 45 25 55 25 12 55-5 65-25 10-20-5-45-25-55z" fill="#e67e22" opacity=".6"/>
+                <path d="M200 120c-20 0-38 15-45 35-5 15 5 30 20 35 18 6 38-8 45-25 7-17-5-30-20-35z" fill="#f8b862" opacity=".8"/>
+                <circle cx="180" cy="135" r="12" fill="#2c3e50" opacity=".4"/>
+                <circle cx="220" cy="135" r="12" fill="#2c3e50" opacity=".4"/>
+            </g>
+        </svg>
+    </div>
+</section>
 
-        <div class="preview-container" id="previewContainer">
-            <img id="imagePreview" class="image-preview" alt="Preview">
-            <button class="btn btn-primary" id="sendBtn">Send to API</button>
-            <button class="btn btn-secondary" id="resetBtn">Upload Different Image</button>
-        </div>
+<!-- ====================== Tester ====================== -->
+<section id="tester" class="tester">
+    <h2>IngredientIQ API Tester</h2>
+    <p>Upload a food photo – we’ll tell you what’s inside.</p>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Sending to API...</p>
-        </div>
+    <div class="error-message" id="errorMessage"></div>
 
-        <div class="response-container" id="responseContainer">
-            <div class="response-title">API Response:</div>
-            <div class="response-content" id="responseContent"></div>
-            <button class="btn btn-primary" id="newTestBtn" style="margin-top: 15px;">Test Another Image</button>
-        </div>
+    <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Upload image">
+        <svg class="upload-icon" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent‑light)" stroke-width="4"/>
+            <path d="M35 55h30m-15-15v30" stroke="var(--accent‑light)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <div class="upload-text">Click or drag an image here</div>
+        <input type="file" id="fileInput" accept="image/*">
     </div>
 
-    <script>
-        const API_ENDPOINT = 'https://foodvisor-2zpg.onrender.com/inf';
+    <div class="preview-container" id="previewContainer">
+        <img id="imagePreview" class="image-preview" alt="Preview">
+        <button class="btn btn-primary" id="sendBtn">Analyze with API</button>
+        <button class="btn btn-secondary" id="resetBtn">Choose another</button>
+    </div>
 
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const imagePreview = document.getElementById('imagePreview');
-        const sendBtn = document.getElementById('sendBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const loading = document.getElementById('loading');
-        const responseContainer = document.getElementById('responseContainer');
-        const responseContent = document.getElementById('responseContent');
-        const errorMessage = document.getElementById('errorMessage');
-        const newTestBtn = document.getElementById('newTestBtn');
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Chef is tasting the image…</p>
+    </div>
 
-        let currentFile = null;
+    <div class="response-container" id="responseContainer">
+        <div class="response-title">API Result</div>
+        <div class="response-content" id="responseContent"></div>
+        <button class="btn btn-primary" id="newTestBtn" style="margin-top:16px;">Test another</button>
+    </div>
+</section>
 
-        uploadArea.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', handleFileSelect);
-        sendBtn.addEventListener('click', sendToAPI);
-        resetBtn.addEventListener('click', resetApp);
-        newTestBtn.addEventListener('click', resetApp);
+<footer>
+    Powered by <strong>IngredientIQ</strong> • © <span id="year"></span>
+</footer>
 
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                currentFile = file;
-                displayImage(file);
-            }
-        }
+<script>
+    // ==== Config ====
+    const API_ENDPOINT = 'https://foodvisor-2zpg.onrender.com/inf';
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-        function displayImage(file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-                uploadArea.style.display = 'none';
-                previewContainer.classList.add('active');
-                hideError();
-            };
-            reader.readAsDataURL(file);
-        }
+    // ==== Elements ====
+    const uploadArea   = document.getElementById('uploadArea');
+    const fileInput    = document.getElementById('fileInput');
+    const previewCont  = document.getElementById('previewContainer');
+    const imgPreview   = document.getElementById('imagePreview');
+    const sendBtn      = document.getElementById('sendBtn');
+    const resetBtn     = document.getElementById('resetBtn');
+    const loading      = document.getElementById('loading');
+    const respCont     = document.getElementById('responseContainer');
+    const respContent  = document.getElementById('responseContent');
+    const errMsg       = document.getElementById('errorMessage');
+    const newTestBtn   = document.getElementById('newTestBtn');
 
-        async function sendToAPI() {
-            if (!currentFile) return;
+    let currentFile = null;
 
-            previewContainer.style.display = 'none';
-            loading.classList.add('active');
-            responseContainer.classList.remove('active');
+    // ==== Interaction ====
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+
+    fileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (file) { currentFile = file; showPreview(file); }
+    });
+
+    sendBtn.addEventListener('click', sendToAPI);
+    resetBtn.addEventListener('click', reset);
+    newTestBtn.addEventListener('click', reset);
+
+    // ==== Helpers ====
+    function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+            imgPreview.src = ev.target.result;
+            uploadArea.style.display = 'none';
+            previewCont.classList.add('active');
             hideError();
+        };
+        reader.readAsDataURL(file);
+    }
 
-            try {
-                const formData = new FormData();
-                formData.append('file', currentFile);
+    async function sendToAPI() {
+        if (!currentFile) return;
 
-                const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    body: formData
-                });
+        previewCont.style.display = 'none';
+        loading.classList.add('active');
+        respCont.classList.remove('active');
+        hideError();
 
-                const data = await response.json();
+        try {
+            const fd = new FormData();
+            fd.append('file', currentFile);
 
-                displayResponse(data, response.status);
-                loading.classList.remove('active');
-                responseContainer.classList.add('active');
-            } catch (error) {
-                console.error('API error:', error);
-                loading.classList.remove('active');
-                showError('Failed to connect to API: ' + error.message);
-                previewContainer.classList.add('active');
-                previewContainer.style.display = 'block';
-            }
+            const res = await fetch(API_ENDPOINT, { method: 'POST', body: fd });
+            const data = await res.json();
+
+            displayResponse(data, res.status);
+        } catch (e) {
+            console.error(e);
+            showError('Connection error: ' + e.message);
+            previewCont.style.display = 'block';
+        } finally {
+            loading.classList.remove('active');
         }
+    }
 
-        function displayResponse(data, status) {
-            if (status === 200 && data.analysis) {
-                responseContent.innerHTML = marked.parse(data.analysis);
-            } else {
-                const formattedResponse = JSON.stringify(data, null, 2);
-                responseContent.textContent = `Status: ${status}\n\n${formattedResponse}`;
-            }
+    function displayResponse(data, status) {
+        if (status === 200 && data.analysis) {
+            respContent.innerHTML = marked.parse(data.analysis);
+        } else {
+            respContent.textContent = `Status: ${status}\n\n${JSON.stringify(data, null, 2)}`;
         }
+        respCont.classList.add('active');
+    }
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('active');
-        }
+    function showError(msg) {
+        errMsg.textContent = msg;
+        errMsg.classList.add('active');
+    }
+    function hideError() { errMsg.classList.remove('active'); }
 
-        function hideError() {
-            errorMessage.classList.remove('active');
-        }
-
-        function resetApp() {
-            uploadArea.style.display = 'block';
-            previewContainer.classList.remove('active');
-            previewContainer.style.display = 'none';
-            responseContainer.classList.remove('active');
-            fileInput.value = '';
-            imagePreview.src = '';
-            currentFile = null;
-            hideError();
-        }
-    </script>
+    function reset() {
+        uploadArea.style.display = 'block';
+        previewCont.classList.remove('active');
+        respCont.classList.remove('active');
+        fileInput.value = '';
+        imgPreview.src = '';
+        currentFile = null;
+        hideError();
+    }
+</script>
 </body>
-
 </html>
