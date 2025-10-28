@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IngredientIQ – Watercolor Food Vision</title>
+    <title>IngredientIQ – AI-Powered Food Analysis</title>
 
-    <!-- Google Font – a hand‑drawn, friendly feel -->
+    <!-- Google Font – hand‑drawn feel -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Marked.js for markdown rendering -->
+    <!-- Marked.js for markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
-            /* Watercolor palette – soft, organic tones */
-            --ink: #2c3e50;          /* deep navy for text */
-            --accent: #e67e22;       /* warm coral for CTAs */
-            --accent‑light: #f8b862;
-            --bg: #faf9f5;           /* creamy paper */
+            --ink: #2c3e50;
+            --accent: #e67e22;
+            --accent-light: #f8b862;
+            --bg: #faf9f5;
             --card: #ffffff;
-            --wash: #f0efeb;         /* subtle wash for cards */
+            --wash: #f0efeb;
             --shadow: rgba(0,0,0,.08);
         }
 
@@ -35,52 +34,131 @@
             flex-direction:column;
             align-items:center;
             padding:20px 0;
+            position:relative;
+            overflow-x:hidden;
         }
 
-        /* ---------- Header (Hubcycle style) ---------- */
+        /* ========== Geometric Background Shapes ========== */
+        .geometric-bg {
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:0;
+            pointer-events:none;
+            overflow:hidden;
+        }
+
+        .shape {
+            position:absolute;
+            opacity:0.06;
+            animation:float 20s infinite ease-in-out;
+        }
+
+        .shape1 {
+            top:10%;
+            left:5%;
+            width:200px;
+            height:200px;
+            background:linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            clip-path:polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation-delay:0s;
+        }
+
+        .shape2 {
+            top:60%;
+            right:8%;
+            width:180px;
+            height:180px;
+            background:linear-gradient(45deg, #3498db, #2ecc71);
+            clip-path:polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+            animation-delay:-5s;
+        }
+
+        .shape3 {
+            bottom:15%;
+            left:12%;
+            width:150px;
+            height:150px;
+            background:linear-gradient(225deg, #e74c3c, #c0392b);
+            clip-path:polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation-delay:-10s;
+        }
+
+        .shape4 {
+            top:35%;
+            right:25%;
+            width:220px;
+            height:220px;
+            background:linear-gradient(180deg, var(--accent-light), #f39c12);
+            clip-path:polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            animation-delay:-7s;
+        }
+
+        .shape5 {
+            top:5%;
+            right:15%;
+            width:130px;
+            height:130px;
+            background:linear-gradient(90deg, #9b59b6, #8e44ad);
+            clip-path:polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+            animation-delay:-3s;
+        }
+
+        .shape6 {
+            bottom:25%;
+            right:35%;
+            width:170px;
+            height:170px;
+            background:linear-gradient(315deg, #16a085, #1abc9c);
+            clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation-delay:-12s;
+        }
+
+        .shape7 {
+            top:50%;
+            left:25%;
+            width:140px;
+            height:140px;
+            background:linear-gradient(270deg, #e67e22, #d35400);
+            transform:rotate(45deg);
+            animation-delay:-8s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform:translateY(0px) rotate(0deg); }
+            25% { transform:translateY(-30px) rotate(5deg); }
+            50% { transform:translateY(-15px) rotate(-5deg); }
+            75% { transform:translateY(-40px) rotate(3deg); }
+        }
+
+        /* All content above background */
+        header, .hero, .tester, footer {
+            position:relative;
+            z-index:1;
+        }
+
+        /* ---------- Header (Logo only, centered) ---------- */
         header {
             width:100%;
             max-width:1200px;
-            padding:0 20px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
+            padding:20px;
+            text-align:center;
             margin-bottom:40px;
         }
         .logo {
-            display:flex;
+            display:inline-flex;
             align-items:center;
             gap:12px;
             font-weight:700;
-            font-size:1.4rem;
+            font-size:1.8rem;
             color:var(--accent);
-        }
-        .logo svg { width:36px; height:36px; fill:currentColor; }
-        nav {
-            display:flex;
-            gap:8px;
-        }
-        nav a {
-            padding:8px 16px;
-            border-radius:8px;
-            background:#2c6b6f;
-            color:#fff;
-            font-weight:600;
-            text-decoration:none;
-            transition:background .3s;
-        }
-        nav a:hover { background:#1f5156; }
-        .cta {
-            background:var(--accent);
-            color:#fff;
-            padding:10px 20px;
-            border-radius:8px;
-            font-weight:600;
             text-decoration:none;
         }
-        .cta:hover { background:#d35400; }
+        .logo svg { width:42px; height:42px; fill:currentColor; }
 
-        /* ---------- Hero (Hubcycle vibe) ---------- */
+        /* ---------- Hero ---------- */
         .hero {
             width:100%;
             max-width:1200px;
@@ -95,7 +173,7 @@
             font-size:4.5rem;
             font-weight:700;
             color:var(--accent);
-            line-height:1;
+            line-height:1.1;
             margin-bottom:16px;
         }
         .hero p {
@@ -114,16 +192,13 @@
         }
         .hero .btn:hover { background:#d35400; }
 
-        .hero .illustration {
-            position:relative;
-        }
         .hero .illustration svg {
             width:100%;
             max-width:420px;
             filter:drop-shadow(0 8px 20px rgba(0,0,0,.1));
         }
 
-        /* ---------- Tester Card (watercolor wash) ---------- */
+        /* ---------- Tester Card ---------- */
         .tester {
             background:var(--card);
             border-radius:24px;
@@ -153,17 +228,43 @@
             color:#777;
         }
 
-        /* Upload area */
+        /* Dietary Input */
+        .input-group {
+            margin-bottom:20px;
+        }
+        .input-group label {
+            display:block;
+            margin-bottom:8px;
+            color:#555;
+            font-weight:600;
+        }
+        .input-group input {
+            width:100%;
+            padding:12px 15px;
+            border-radius:10px;
+            border:1px solid #ddd;
+            font-size:16px;
+            font-family:'Quicksand',sans-serif;
+            transition:border .3s;
+        }
+        .input-group input:focus {
+            outline:none;
+            border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(230,126,34,.2);
+        }
+
+        /* Upload Area (Drag & Drop) */
         .upload-area {
-            border:3px dashed var(--accent‑light);
+            border:3px dashed var(--accent-light);
             border-radius:16px;
             padding:48px 20px;
             text-align:center;
             cursor:pointer;
             transition:all .3s;
             background:var(--wash);
+            position:relative;
         }
-        .upload-area:hover {
+        .upload-area.dragover {
             border-color:var(--accent);
             background:#fff9f0;
             transform:scale(1.02);
@@ -192,6 +293,7 @@
             object-fit:contain;
             border-radius:16px;
             box-shadow:0 8px 24px var(--shadow);
+            margin-bottom:16px;
         }
 
         /* Buttons */
@@ -257,6 +359,7 @@
             max-height:420px;
             overflow-y:auto;
             line-height:1.7;
+            font-size:0.95rem;
         }
         .response-content pre {
             background:#f5f5f5;
@@ -276,42 +379,55 @@
         }
         .error-message.active { display:block; }
 
-        /* Footer */
         footer {
             margin-top:60px;
             text-align:center;
             font-size:0.9rem;
             color:#777;
         }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns:1fr;
+            }
+            .hero h1 {
+                font-size:3rem;
+            }
+            .shape {
+                opacity:0.04;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- ====================== Header ====================== -->
+<!-- ====================== Geometric Background ====================== -->
+<div class="geometric-bg">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <div class="shape shape4"></div>
+    <div class="shape shape5"></div>
+    <div class="shape shape6"></div>
+    <div class="shape shape7"></div>
+</div>
+
+<!-- ====================== Header (Logo Only) ====================== -->
 <header>
-    <div class="logo">
+    <a href="#" class="logo">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
         IngredientIQ
-    </div>
-    <nav>
-        <a href="#buy">Buy</a>
-        <a href="#sell">Sell</a>
-        <a href="#expertise">Expertise</a>
-        <a href="#impact">Impact</a>
-        <a href="#culture">Culture</a>
-    </nav>
-    <a href="#contact" class="cta">Contact</a>
+    </a>
 </header>
 
 <!-- ====================== Hero ====================== -->
 <section class="hero">
     <div>
-        <h1>We turn<br>what’s left<br>into what’s next.</h1>
-        <p>We purchase by‑products, we sell ingredients.</p>
-        <a href="#tester" class="btn">Discover our API</a>
+        <h1>Decode Every Ingredient with Vision AI</h1>
+        <p>Upload any food image and instantly discover ingredients, nutritional insights, and dietary compatibility.</p>
+        <a href="#tester" class="btn">Try Our API</a>
     </div>
     <div class="illustration">
-        <!-- Watercolor‑style blueberry (wireframe + soft fill) -->
         <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <filter id="watercolor">
@@ -334,66 +450,94 @@
 
 <!-- ====================== Tester ====================== -->
 <section id="tester" class="tester">
-    <h2>IngredientIQ API Tester</h2>
-    <p>Upload a food photo – we’ll tell you what’s inside.</p>
+    <h2>AI Food Analysis Demo</h2>
+    <p>Upload a food photo and get instant ingredient analysis powered by computer vision.</p>
 
     <div class="error-message" id="errorMessage"></div>
 
+    <!-- Dietary Preference -->
+    <div class="input-group">
+        <label for="dietaryPreference">Dietary Preferences (optional):</label>
+        <input type="text" id="dietaryPreference" placeholder="e.g., vegan, gluten-free, keto, nut allergy">
+    </div>
+
+    <!-- Upload Area with Drag & Drop -->
     <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Upload image">
         <svg class="upload-icon" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent‑light)" stroke-width="4"/>
-            <path d="M35 55h30m-15-15v30" stroke="var(--accent‑light)" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent-light)" stroke-width="4"/>
+            <path d="M35 55h30m-15-15v30" stroke="var(--accent-light)" stroke-width="4" stroke-linecap="round"/>
         </svg>
-        <div class="upload-text">Click or drag an image here</div>
+        <div class="upload-text">Click or drag a food image here</div>
         <input type="file" id="fileInput" accept="image/*">
     </div>
 
     <div class="preview-container" id="previewContainer">
-        <img id="imagePreview" class="image-preview" alt="Preview">
-        <button class="btn btn-primary" id="sendBtn">Analyze with API</button>
-        <button class="btn btn-secondary" id="resetBtn">Choose another</button>
+        <img id="imagePreview" class="image-preview" alt="Uploaded food image">
+        <button class="btn btn-primary" id="sendBtn">Analyze Ingredients</button>
+        <button class="btn btn-secondary" id="resetBtn">Choose Different Image</button>
     </div>
 
     <div class="loading" id="loading">
         <div class="spinner"></div>
-        <p>Chef is tasting the image…</p>
+        <p>Analyzing ingredients and nutritional data...</p>
     </div>
 
     <div class="response-container" id="responseContainer">
-        <div class="response-title">API Result</div>
+        <div class="response-title">Analysis Results</div>
         <div class="response-content" id="responseContent"></div>
-        <button class="btn btn-primary" id="newTestBtn" style="margin-top:16px;">Test another</button>
+        <button class="btn btn-primary" id="newTestBtn" style="margin-top:16px;">Analyze Another Image</button>
+        <button class="btn btn-secondary" id="downloadBtn" style="margin-top:10px;">Download Results</button>
     </div>
 </section>
 
 <footer>
-    Powered by <strong>IngredientIQ</strong> • © <span id="year"></span>
+    Powered by <strong>IngredientIQ</strong> AI Food Vision • © <span id="year"></span>
 </footer>
 
 <script>
-    // ==== Config ====
     const API_ENDPOINT = 'https://foodvisor-2zpg.onrender.com/inf';
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ==== Elements ====
-    const uploadArea   = document.getElementById('uploadArea');
-    const fileInput    = document.getElementById('fileInput');
-    const previewCont  = document.getElementById('previewContainer');
-    const imgPreview   = document.getElementById('imagePreview');
-    const sendBtn      = document.getElementById('sendBtn');
-    const resetBtn     = document.getElementById('resetBtn');
-    const loading      = document.getElementById('loading');
-    const respCont     = document.getElementById('responseContainer');
-    const respContent  = document.getElementById('responseContent');
-    const errMsg       = document.getElementById('errorMessage');
-    const newTestBtn   = document.getElementById('newTestBtn');
+    // Elements
+    const uploadArea        = document.getElementById('uploadArea');
+    const fileInput         = document.getElementById('fileInput');
+    const dietaryPreference = document.getElementById('dietaryPreference');
+    const previewCont       = document.getElementById('previewContainer');
+    const imgPreview        = document.getElementById('imagePreview');
+    const sendBtn           = document.getElementById('sendBtn');
+    const resetBtn          = document.getElementById('resetBtn');
+    const loading           = document.getElementById('loading');
+    const respCont          = document.getElementById('responseContainer');
+    const respContent       = document.getElementById('responseContent');
+    const errMsg            = document.getElementById('errorMessage');
+    const newTestBtn        = document.getElementById('newTestBtn');
+    const downloadBtn       = document.getElementById('downloadBtn');
 
     let currentFile = null;
 
-    // ==== Interaction ====
-    uploadArea.addEventListener('click', () => fileInput.click());
-    uploadArea.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+    // Drag & Drop
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+        uploadArea.addEventListener(event, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    });
+    ['dragenter', 'dragover'].forEach(event => {
+        uploadArea.addEventListener(event, () => uploadArea.classList.add('dragover'));
+    });
+    ['dragleave', 'drop'].forEach(event => {
+        uploadArea.addEventListener(event, () => uploadArea.classList.remove('dragover'));
+    });
+    uploadArea.addEventListener('drop', e => {
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            currentFile = file;
+            showPreview(file);
+        }
+    });
 
+    // Click to upload
+    uploadArea.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => {
         const file = e.target.files[0];
         if (file) { currentFile = file; showPreview(file); }
@@ -402,8 +546,8 @@
     sendBtn.addEventListener('click', sendToAPI);
     resetBtn.addEventListener('click', reset);
     newTestBtn.addEventListener('click', reset);
+    downloadBtn.addEventListener('click', downloadResponse);
 
-    // ==== Helpers ====
     function showPreview(file) {
         const reader = new FileReader();
         reader.onload = ev => {
@@ -426,6 +570,9 @@
         try {
             const fd = new FormData();
             fd.append('file', currentFile);
+            if (dietaryPreference.value.trim()) {
+                fd.append('dietary_preference', dietaryPreference.value.trim());
+            }
 
             const res = await fetch(API_ENDPOINT, { method: 'POST', body: fd });
             const data = await res.json();
@@ -457,12 +604,26 @@
 
     function reset() {
         uploadArea.style.display = 'block';
+        uploadArea.classList.remove('dragover');
         previewCont.classList.remove('active');
+        previewCont.style.display = 'none';
         respCont.classList.remove('active');
         fileInput.value = '';
         imgPreview.src = '';
+        dietaryPreference.value = '';
         currentFile = null;
         hideError();
+    }
+
+    function downloadResponse() {
+        const text = respContent.innerText || respContent.textContent;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ingredientiq_analysis.txt';
+        a.click();
+        URL.revokeObjectURL(url);
     }
 </script>
 </body>
