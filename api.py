@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 import base64
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
 
@@ -21,8 +21,18 @@ client = Groq(api_key=api_key)
 
 
 @app.post("/inf")
-async def analyze_image(file: UploadFile = File(...)):
+async def analyze_image(
+    file: UploadFile = File(...), dietary_preference: str = Form(None)
+):
     contents = await file.read()
+
+    prompt_text = "Analyze this food label image. Identify who it is suitable for (eg., people with iron deficiency) and who it isn't suitable for (e.g., lactose intolerant people). Also, provide a breakdown of nutrient percentages (carbohydrates, proteins, fats, etc.)."
+    if dietary_preference:
+        prompt_text += (
+            f" Consider the following dietary preferences: {dietary_preference}."
+        )
+    prompt_text += " Do not write the whole process, just give me the final answer."
+
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -30,7 +40,7 @@ async def analyze_image(file: UploadFile = File(...)):
                 "content": [
                     {
                         "type": "text",
-                        "text": "Analyze this food label image. Identify who it is suitable for (e.g., people with iron deficiency) and who it isn't suitable for (e.g., lactose intolerant people). Do not write the whole process, just give me the final answer.",
+                        "text": prompt_text,
                     },
                     {
                         "type": "image_url",
